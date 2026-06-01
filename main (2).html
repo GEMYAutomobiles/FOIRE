@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+    .cd-wrap {
+      background: #119562;
+      border-radius: 12px;
+      padding: 16px 28px;
+      display: inline-flex;
+      gap: 24px;
+      justify-content: center;
+    }
+    .unit { text-align: center; }
+    .num { font-size: 40px; font-weight: 700; color: #ffffff; line-height: 1; }
+    .lbl { font-size: 10px; color: #ffffff; opacity: .7; margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <div class="cd-wrap">
+    <div class="unit"><div class="num" id="d">00</div><div class="lbl">JOURS</div></div>
+    <div class="unit"><div class="num" id="h">00</div><div class="lbl">HEURES</div></div>
+    <div class="unit"><div class="num" id="m">00</div><div class="lbl">MINUTES</div></div>
+    <div class="unit"><div class="num" id="s">00</div><div class="lbl">SECONDES</div></div>
+  </div>
+  <script>
+    const pad = n => String(n).padStart(2, '0');
+    const target = new Date('2026-06-14T19:00:00');
+    function update() {
+      const diff = target - new Date();
+      if (diff <= 0) {
+        ['d','h','m','s'].forEach(i => document.getElementById(i).textContent = '00');
+        return;
+      }
+      document.getElementById('d').textContent = pad(Math.floor(diff / 86400000));
+      document.getElementById('h').textContent = pad(Math.floor((diff % 86400000) / 3600000));
+      document.getElementById('m').textContent = pad(Math.floor((diff % 3600000) / 60000));
+      document.getElementById('s').textContent = pad(Math.floor((diff % 60000) / 1000));
+    }
+    setInterval(update, 1000);
+    update();
+  </script>
+</body>
+</html>
